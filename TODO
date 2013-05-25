@@ -1,0 +1,6 @@
+Minimal before release TODO:
+
+* Support for tunnel mode
+* Support for ikev1
+* Remove GRE specifics
+
