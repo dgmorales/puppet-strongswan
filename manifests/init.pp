@@ -36,51 +36,36 @@
 # Copyright 2011 Your name here, unless otherwise noted.
 #
 
-class strongswan($dont_change_svc = false) {
+class strongswan(
+  $ipsec_conf = $strongswan::params::ipsec_conf,
+  $ipsec_conf_dir = $strongswan::params::ipsec_conf_dir,
+  $ipsec_secrets = $strongswan::params::ipsec_secrets,
+  $ipsec_secrets_dir = $strongswan::params::ipsec_secrets_dir,
+  $packagename = $strongswan::params::packagename,
+  $servicename = $strongswan::params::servicename,
+  $dont_change_svc = false,
+  $plutostart = 'no',
+  $charonstart = 'yes',
+) inherits strongswan::params {
 
-	include strongswan::params
+  class{'strongswan::install': } ->
+  class{'strongswan::config': } ~>
+  class{'strongswan::service': } ->
+  Class["strongswan"]
 
-	package { $strongswan::params::packagename:
+}
+
+# These classes are so simple I think them being here is clearer than
+# separating them.
+class strongswan::install {
+	package { $strongswan::packagename:
 		ensure => installed,
 	}
+}
 
-	service { $strongswan::params::servicename:
+class strongswan::service {
+	service { $strongswan::servicename:
 		ensure  => $dont_change_svc ? { true => undef, default => 'running', },
 		enable  => $dont_change_svc ? { true => undef, default => true, },
-		require => Package[$strongswan::params::packagename],
-	}
-
-	file { '/etc/ipsec.conf':
-		ensure  => file,
-		owner   => 'root',
-		group   => 'root',
-		mode    => '0644',
-		content => template('strongswan/ipsec.conf.erb'),
-		notify  => Service[$strongswan::params::servicename],
-		require => File[$strongswan::params::ipsec_conf_dir]
-	}
-
-	file { $strongswan::params::ipsec_conf_dir:
-		ensure  => directory,
-		owner   => 'root',
-		group   => 'root',
-		mode    => '0755',
-	}
-
-	file { '/etc/ipsec.secrets':
-		ensure  => file,
-		owner   => 'root',
-		group   => 'root',
-		mode    => '0600',
-		content => template("strongswan/ipsec.secrets.${operatingsystem}.erb"),
-		notify  => Service[$strongswan::params::servicename],
-		require => File[$strongswan::params::ipsec_secrets_dir]
-	}
-
-	file { $strongswan::params::ipsec_secrets_dir:
-		ensure  => directory,
-		owner   => 'root',
-		group   => 'root',
-		mode    => '0700',
 	}
 }

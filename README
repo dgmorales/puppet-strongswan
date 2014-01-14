@@ -1,16 +1,15 @@
 strongswan
 
-This is the strongswan module.
+Manage Strongswan IPSec VPNs.
 
 License
 -------
-
+Apache License, Version 2.0
 
 Contact
 -------
-
+Diego Morales <morales@propus.com.br>
 
 Support
 -------
-
-Please log tickets and issues at our [Projects site](http://projects.example.com)
+Please log issues at http://github.com/dgmorales/puppet-strongswan

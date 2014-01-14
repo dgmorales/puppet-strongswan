@@ -7,12 +7,12 @@ define strongswan::conn(
 
 	include strongswan
 
-	file { "${strongswan::params::ipsec_conf_dir}/${conn_name}.conf":
+	file { "${strongswan::ipsec_conf_dir}/${conn_name}.conf":
 		ensure  => file,
 		owner   => 'root',
 		group   => 'root',
 		mode    => '0644',
 		content => template('strongswan/ipsec.conn.erb'),
-		notify  => Service[$strongswan::params::servicename],
+		notify  => Service[$strongswan::servicename],
 	}
 }
