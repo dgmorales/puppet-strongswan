@@ -8,6 +8,6 @@ define strongswan::secret($conn_name = $title, $comment = "Secret for ${title}."
 		group   => 'root',
 		mode    => '0600',
 		content => template('strongswan/ipsec.secret.erb'),
-		notify  => Service[$strongswan::servicename],
+  	notify  => Class[Strongswan::Service],
 	}
 }

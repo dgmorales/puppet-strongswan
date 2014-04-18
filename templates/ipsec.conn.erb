@@ -1,16 +1,16 @@
-# <%= description %>
-conn <%= conn_name %>
+# <%= @description %>
+conn <%= @conn_name %>
 	keyingtries=%forever
 	mobike=no
 	keyexchange=ikev2
 	authby=psk
 	type=transport
 	auto=start
-	left=<%= left %>
-	right=<%= right %>
+	left=<%= @left %>
+	right=<%= @right %>
 	leftprotoport=gre
 	rightprotoport=gre
-<% if enable_dpd -%>
-	dpdaction=<%= dpdaction %>
-	dpddelay=<%= dpddelay %>
+<% if @enable_dpd -%>
+	dpdaction=<%= @dpdaction %>
+	dpddelay=<%= @dpddelay %>
 <% end -%>

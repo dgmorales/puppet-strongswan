@@ -8,4 +8,20 @@
 #
 # Learn more about module testing here: http://docs.puppetlabs.com/guides/tests_smoke.html
 #
+
+if $::osfamily == 'RedHat' {
+  include epel
+}
 include strongswan
+
+Class['epel'] -> Class['strongswan']
+
+strongswan::conn { 'test_conn1':
+  description => 'Test connection 1',
+  left => '%defaultroute',
+  right => '172.16.0.2',
+}
+
+strongswan::secret {'test_conn1':
+  line => '%any 172.16.0.2 : PSK "dhjkashdjkasdhk"',
+}

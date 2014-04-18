@@ -1,8 +1,8 @@
 # /etc/ipsec.conf - strongSwan IPsec configuration file
 
 config setup
-	plutostart=<%= scope.lookupvar('strongswan::params::plutostart') %>
-	charonstart=<%= scope.lookupvar('strongswan::params::charonstart') %>
+	plutostart=<%= scope.lookupvar('strongswan::plutostart') %>
+	charonstart=<%= scope.lookupvar('strongswan::charonstart') %>
 
-include <%= scope.lookupvar('strongswan::params::ipsec_conf_dir') %>/*.conf
+include <%= scope.lookupvar('strongswan::ipsec_conf_dir') %>/*.conf
 

@@ -6,7 +6,7 @@ class strongswan::config {
 		group   => 'root',
 		mode    => '0644',
 		content => template('strongswan/ipsec.conf.erb'),
-		notify  => Service[$strongswan::servicename],
+		notify  => Class[Strongswan::Service],
 		require => File[$strongswan::ipsec_conf_dir]
 	}
 
@@ -17,13 +17,21 @@ class strongswan::config {
 		mode    => '0755',
 	}
 
+  file { "${strongswan::ipsec_conf_dir}/empty.conf":
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => 'puppet:///modules/strongswan/empty.conf',
+  }
+
 	file { $strongswan::ipsec_secrets:
 		ensure  => file,
 		owner   => 'root',
 		group   => 'root',
 		mode    => '0600',
-		content => template("strongswan/ipsec.secrets.${operatingsystem}.erb"),
-		notify  => Service[$strongswan::servicename],
+		content => template("strongswan/ipsec.secrets.${osfamily}.erb"),
+		notify  => Class[Strongswan::Service],
 		require => File[$strongswan::ipsec_secrets_dir]
 	}
 

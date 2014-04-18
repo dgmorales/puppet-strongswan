@@ -1,6 +1,18 @@
 Minimal before release TODO:
 
-* Support for tunnel mode
-* Support for ikev1
-* Remove GRE specifics
+* Define a generic connection type
+* Real testing
+* Update Modufile
+* Update README
+* Copyright comments
+* Basic class documentation
+* Mention epel requirement somewhere
 
+Other TODO:
+* spec tests
+* Deprecated charonstart/plutostart messages?
+* Define some specific connection types based on generic
+* IKEv1 vs IKEv2 settings?
+** Roadwarrior client/server
+** Generic Transport mode?
+** Generic Tunnel mode?

@@ -13,6 +13,6 @@ define strongswan::conn(
 		group   => 'root',
 		mode    => '0644',
 		content => template('strongswan/ipsec.conn.erb'),
-		notify  => Service[$strongswan::servicename],
+		notify  => Class[Strongswan::Service],
 	}
 }
