@@ -11,15 +11,16 @@
 
 if $::osfamily == 'RedHat' {
   include epel
+  Class['epel'] -> Class['strongswan']
 }
 include strongswan
 
-Class['epel'] -> Class['strongswan']
-
 strongswan::conn { 'test_conn1':
   description => 'Test connection 1',
-  left => '%defaultroute',
-  right => '172.16.0.2',
+  hash => {
+    left => '%defaultroute',
+    right => '172.16.0.2',
+  }
 }
 
 strongswan::secret {'test_conn1':

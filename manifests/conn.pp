@@ -1,11 +1,10 @@
 define strongswan::conn(
-  $conn_name  = $title, $description, $left, $right,
-  $enable_dpd = false,
-  $dpdaction  = 'restart',
-  $dpddelay   = '30s',
+  $conn_name = $title,
+  $description = "Connection $conn_name",
+  $hash = {}
   ) {
 
-	include strongswan
+  #include strongswan
 
 	file { "${strongswan::ipsec_conf_dir}/${conn_name}.conf":
 		ensure  => file,

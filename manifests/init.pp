@@ -44,15 +44,14 @@ class strongswan(
   $packagename = $strongswan::params::packagename,
   $servicename = $strongswan::params::servicename,
   $dont_change_svc = false,
-  $plutostart = 'no',
-  $charonstart = 'yes',
+  $plutostart = undef,
+  $charonstart = undef,
 ) inherits strongswan::params {
 
   class{'strongswan::install': } ->
   class{'strongswan::config': } ~>
   class{'strongswan::service': } ->
   Class["strongswan"]
-
 }
 
 # These classes are so simple I think them being here is clearer than
