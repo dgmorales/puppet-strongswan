@@ -1,5 +1,7 @@
 Minimal before release TODO:
 
+* ikev1 option? --> install package on debian/ubuntu
+* default options pluto/charon start on debian?
 * Define a generic connection type
 * Real testing
 * Update Modufile

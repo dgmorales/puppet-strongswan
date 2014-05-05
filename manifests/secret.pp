@@ -1,13 +1,23 @@
-define strongswan::secret($conn_name = $title, $comment = "Secret for ${title}.", $line) {
+define strongswan::secret(
+  $secret_name = $title,
+  $source = '_UNSET_',
+  $content = '_UNSET_',
+) {
 
-	include strongswan
+  if ($source == '_UNSET_' and $content == '_UNSET_') or ($source != '_UNSET_'
+  and $content != '_UNSET_') {
+    fail('You must specify either source or content, not both, not none.')
+  }
 
-	file { "${strongswan::ipsec_secrets_dir}/${conn_name}.secret":
-		ensure  => file,
-		owner   => 'root',
-		group   => 'root',
-		mode    => '0600',
-		content => template('strongswan/ipsec.secret.erb'),
-  	notify  => Class[Strongswan::Service],
-	}
+  include strongswan
+
+  file { "${strongswan::ipsec_secrets_dir}/${secret_name}.secret":
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0600',
+    source  => $source ? { '_UNSET_' => undef, default => $source, },
+    content => $content ? { '_UNSET_' => undef, default => "$content\n", },
+    notify  => Class[Strongswan::Service],
+  }
 }
